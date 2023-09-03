@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<!-- saved from url=(0075)https://note.youdao.com/newEditor/bulb.html?disable-cache-tag=1644208223293 -->
+<html manifest="manifest.appcache?1807212e5b73373dc04f"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>bulb editor</title>
+  <style type="text/css">::-webkit-scrollbar {
+  background: transparent;
+  border-radius: 4px;
+  height: 8px;
+  width: 8px;
+}
+::-webkit-scrollbar-button {
+  display: none;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  min-height: 15px;
+  width: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7d7d7d;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #7d7d7d;
+}
+</style><style type="text/css">@keyframes blinkAnimation {
+  50% {
+    border-color: transparent;
+  }
+}
+.caret.blink {
+  animation: 1s blinkAnimation step-end infinite;
+}
+@keyframes blinkAnimation-restart {
+  50% {
+    border-color: transparent;
+  }
+}
+.caret.blink-restart {
+  animation: 1s blinkAnimation-restart step-end infinite;
+}
+*:not(input)::selection {
+  background-color: transparent;
+}
+</style><style type="text/css">.bulb-drag-shadow > * {
+  position: absolute;
+  -webkit-mask-image: -webkit-gradient(linear, left top, right bottom, from(rgba(0, 0, 0, 0.8)), to(rgba(0, 0, 0, 0)));
+  pointer-events: none;
+}
+</style><style type="text/css">.ant-message {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  -webkit-font-feature-settings: 'tnum';
+  font-feature-settings: 'tnum';
+  position: fixed;
+  top: 16px;
+  left: 0;
+  z-index: 1010;
+  width: 100%;
+  pointer-events: none;
+}
+.ant-message-notice {
+  padding: 8px;
+  text-align: center;
+}
+.ant-message-notice:first-child {
+  margin-top: -8px;
+}
+.ant-message-notice-content {
+  display: inline-block;
+  padding: 10px 16px;
+  background: #fff;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: all;
+}
+.ant-message-success .anticon {
+  color: #52c41a;
+}
+.ant-message-error .anticon {
+  color: #f5222d;
+}
+.ant-message-warning .anticon {
+  color: #faad14;
+}
+.ant-message-info .anticon,
+.ant-message-loading .anticon {
+  color: #1890ff;
+}
+.ant-message .anticon {
+  position: relative;
+  top: 1px;
+  margin-right: 8px;
+  font-size: 16px;
+}
+.ant-message-notice.move-up-leave.move-up-leave-active {
+  overflow: hidden;
+  -webkit-animation-name: MessageMoveOut;
+  animation-name: MessageMoveOut;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+}
+@-webkit-keyframes MessageMoveOut {
+  0% {
+    max-height: 150px;
+    padding: 8px;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+}
+@keyframes MessageMoveOut {
+  0% {
+    max-height: 150px;
+    padding: 8px;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+}
+</style><style type="text/css">.ant-message {
+  font-size: 12px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  line-height: 17px;
+}
+.ant-message .ant-message-custom-content.ant-message-error {
+  display: flex;
+  color: #ed7171;
+}
+.ant-message-error > span:last-child {
+  margin-left: 0.5em;
+}
+.ant-message .ant-message-notice-content {
+  box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+.ant-message-success {
+  display: flex;
+}
+.ant-message-success > span:last-child {
+  margin-left: 0.5em;
+}
+</style><style type="text/css">.code-theme-default pre {
+  border-left: 1px solid rgba(208, 212, 217, 0.5);
+  border-right: 1px solid rgba(208, 212, 217, 0.5);
+}
+.code-theme-default pre:first-child {
+  border-top: 1px solid rgba(208, 212, 217, 0.5);
+}
+.code-theme-default pre:last-child {
+  border-bottom: 1px solid rgba(208, 212, 217, 0.5);
+}
+.code-theme-default pre {
+  background-color: #f7f7f7;
+  color: #41464b;
+  line-height: 1.3;
+}
+.code-theme-default .plain {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  font-weight: normal;
+}
+.code-theme-default .token {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  font-weight: normal;
+  font-weight: 500;
+}
+.code-theme-default .token.comment,
+.code-theme-default .token.prolog,
+.code-theme-default .token.doctype,
+.code-theme-default .token.cdata {
+  color: #708090;
+}
+.code-theme-default .token.punctuation {
+  color: #999;
+}
+.code-theme-default .token .namespace {
+  opacity: 0.7;
+}
+.code-theme-default .token.property,
+.code-theme-default .token.tag,
+.code-theme-default .token.boolean,
+.code-theme-default .token.number,
+.code-theme-default .token.constant,
+.code-theme-default .token.symbol,
+.code-theme-default .token.deleted {
+  color: #905;
+}
+.code-theme-default .token.selector,
+.code-theme-default .token.attr-name,
+.code-theme-default .token.string,
+.code-theme-default .token.char,
+.code-theme-default .token.builtin,
+.code-theme-default .token.inserted {
+  color: #690;
+}
+.code-theme-default .token.operator,
+.code-theme-default .token.entity,
+.code-theme-default .token.url {
+  background: rgba(255, 255, 255, 0.5);
+  color: #9a6e3a;
+}
+.code-theme-default .token.atrule,
+.code-theme-default .token.attr-value,
+.code-theme-default .token.keyword {
+  color: #07a;
+}
+.code-theme-default .token.function,
+.code-theme-default .token.class-name {
+  color: #dd4a68;
+}
+.code-theme-default .token.regex,
+.code-theme-default .token.important,
+.code-theme-default .token.variable {
+  color: #e90;
+}
+.code-theme-default .token.important,
+.code-theme-default .token.bold {
+  font-weight: bold;
+}
+.code-theme-default .token.italic {
+  font-style: italic;
+}
+.code-theme-default .token.entity {
+  cursor: help;
+}
+.code-theme-coy pre {
+  border-left: 1px solid rgba(0, 0, 0, 0);
+  border-right: 1px solid rgba(0, 0, 0, 0);
+}
+.code-theme-coy pre:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0);
+}
+.code-theme-coy pre:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+.code-theme-coy .plain,
+.code-theme-coy .token {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  font-weight: normal;
+}
+.code-theme-coy pre {
+  background: none;
+  background-attachment: local;
+  background-color: #fdfdfd;
+  background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
+  background-origin: content-box;
+  background-size: 3em 3em;
+  border-left: 10px solid #358ccb;
+  box-shadow: -1px 0 0 0 #358ccb, 0 0 0 0 #dfdfdf;
+  box-sizing: border-box;
+  color: #000;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  hyphens: none;
+  line-height: 1.6;
+  padding: 0 0 0 1em;
+  position: relative;
+  tab-size: 4;
+  text-align: left;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+}
+.code-theme-coy pre:nth-child(2n+1) {
+  background-color: #f6fafe;
+}
+.code-theme-coy pre::before,
+.code-theme-coy pre::after {
+  bottom: 0.75em;
+  box-shadow: 0 13px 8px #979797;
+  content: '';
+  display: block;
+  height: 20%;
+  left: 0.18em;
+  max-height: 13em;
+  position: absolute;
+  transform: rotate(-2deg);
+  width: 40%;
+  z-index: -2;
+}
+.code-theme-coy .plain {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  font-weight: normal;
+}
+.code-theme-coy .token {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  font-weight: normal;
+  font-weight: 500;
+}
+.code-theme-coy .token.comment,
+.code-theme-coy .token.block-comment,
+.code-theme-coy .token.prolog,
+.code-theme-coy .token.doctype,
+.code-theme-coy .token.cdata {
+  color: #7d8b99;
+}
+.code-theme-coy .token.punctuation {
+  color: #5f6364;
+}
+.code-theme-coy .token.property,
+.code-theme-coy .token.tag,
+.code-theme-coy .token.boolean,
+.code-theme-coy .token.number,
+.code-theme-coy .token.function-name,
+.code-theme-coy .token.constant,
+.code-theme-coy .token.symbol,
+.code-theme-coy .token.deleted {
+  color: #c92c2c;
+}
+.code-theme-coy .token.selector,
+.code-theme-coy .token.attr-name,
+.code-theme-coy .token.string,
+.code-theme-coy .token.char,
+.code-theme-coy .token.function,
+.code-theme-coy .token.builtin,
+.code-theme-coy .token.inserted {
+  color: #2f9c0a;
+}
+.code-theme-coy .token.operator,
+.code-theme-coy .token.entity,
+.code-theme-coy .token.url,
+.code-theme-coy .token.variable {
+  background: rgba(255, 255, 255, 0.5);
+  color: #a67f59;
+}
+.code-theme-coy .token.atrule,
+.code-theme-coy .token.attr-value,
+.code-theme-coy .token.keyword,
+.code-theme-coy .token.class-name {
+  color: #1990b8;
+}
+.code-theme-coy .token.regex,
+.code-theme-coy .token.important {
+  color: #e90;
+}
+.code-theme-coy .token.style,
+.code-theme-coy .token.string {
+  background: rgba(255, 255, 255, 0.5);
+  color: #a67f59;
+}
+.code-theme-coy .token.important {
+  font-weight: normal;
+}
+.code-theme-coy .token.bold {
+  font-weight: bold;
+}
+.code-theme-coy .token.italic {
+  font-style: italic;
+}
+.code-theme-coy .token.entity {
+  cursor: help;
+}
+.code-theme-coy .token.namespace {
+  opacity: 0.7;
+}
+.code-theme-tomorrow pre {
+  border-left: 1px solid rgba(0, 0, 0, 0);
+  border-right: 1px solid rgba(0, 0, 0, 0);
+}
+.code-theme-tomorrow pre:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0);
+}
+.code-theme-tomorrow pre:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+.code-theme-tomorrow .plain,
+.code-theme-tomorrow .token {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  font-weight: normal;
+  color: #aaafb4;
+}
+.code-theme-tomorrow pre {
+  background: #2d2d2d;
+  caret-color: #fff;
+  color: #ccc;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  hyphens: none;
+  line-height: 1.3;
+  tab-size: 4;
+  text-align: left;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+}
+.code-theme-tomorrow .token.comment,
+.code-theme-tomorrow .token.block-comment,
+.code-theme-tomorrow .token.prolog,
+.code-theme-tomorrow .token.doctype,
+.code-theme-tomorrow .token.cdata {
+  color: #999;
+}
+.code-theme-tomorrow .token.punctuation {
+  color: #ccc;
+}
+.code-theme-tomorrow .token.tag,
+.code-theme-tomorrow .token.attr-name,
+.code-theme-tomorrow .token.namespace,
+.code-theme-tomorrow .token.deleted {
+  color: #e2777a;
+}
+.code-theme-tomorrow .token.function-name {
+  color: #6196cc;
+}
+.code-theme-tomorrow .token.boolean,
+.code-theme-tomorrow .token.number,
+.code-theme-tomorrow .token.function {
+  color: #f08d49;
+}
+.code-theme-tomorrow .token.property,
+.code-theme-tomorrow .token.class-name,
+.code-theme-tomorrow .token.constant,
+.code-theme-tomorrow .token.symbol {
+  color: #f8c555;
+}
+.code-theme-tomorrow .token.selector,
+.code-theme-tomorrow .token.important,
+.code-theme-tomorrow .token.atrule,
+.code-theme-tomorrow .token.keyword,
+.code-theme-tomorrow .token.builtin {
+  color: #cc99cd;
+}
+.code-theme-tomorrow .token.string,
+.code-theme-tomorrow .token.char,
+.code-theme-tomorrow .token.attr-value,
+.code-theme-tomorrow .token.regex,
+.code-theme-tomorrow .token.variable {
+  color: #7ec699;
+}
+.code-theme-tomorrow .token.operator,
+.code-theme-tomorrow .token.entity,
+.code-theme-tomorrow .token.url {
+  color: #67cdcc;
+}
+.code-theme-tomorrow .token.important,
+.code-theme-tomorrow .token.bold {
+  font-weight: bold;
+}
+.code-theme-tomorrow .token.italic {
+  font-style: italic;
+}
+.code-theme-tomorrow .token.entity {
+  cursor: help;
+}
+.code-theme-tomorrow .token.inserted {
+  color: #008000;
+}
+.code-theme-okaidia pre {
+  border-left: 1px solid rgba(0, 0, 0, 0);
+  border-right: 1px solid rgba(0, 0, 0, 0);
+}
+.code-theme-okaidia pre:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0);
+}
+.code-theme-okaidia pre:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+.code-theme-okaidia .plain,
+.code-theme-okaidia .token {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  font-weight: normal;
+}
+.code-theme-okaidia pre {
+  background: #272822;
+  caret-color: #fff;
+  color: #f8f8f2;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  hyphens: none;
+  line-height: 1.3;
+  tab-size: 4;
+  text-align: left;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+}
+.code-theme-okaidia .token.comment,
+.code-theme-okaidia .token.prolog,
+.code-theme-okaidia .token.doctype,
+.code-theme-okaidia .token.cdata {
+  color: #708090;
+}
+.code-theme-okaidia .token.punctuation {
+  color: #f8f8f2;
+}
+.code-theme-okaidia .token.namespace {
+  opacity: 0.7;
+}
+.code-theme-okaidia .token.property,
+.code-theme-okaidia .token.tag,
+.code-theme-okaidia .token.constant,
+.code-theme-okaidia .token.symbol,
+.code-theme-okaidia .token.deleted {
+  color: #f92672;
+}
+.code-theme-okaidia .token.boolean,
+.code-theme-okaidia .token.number {
+  color: #ae81ff;
+}
+.code-theme-okaidia .token.selector,
+.code-theme-okaidia .token.attr-name,
+.code-theme-okaidia .token.string,
+.code-theme-okaidia .token.char,
+.code-theme-okaidia .token.builtin,
+.code-theme-okaidia .token.inserted {
+  color: #a6e22e;
+}
+.code-theme-okaidia .token.operator,
+.code-theme-okaidia .token.entity,
+.code-theme-okaidia .token.url,
+.code-theme-okaidia .token.language-css .string,
+.code-theme-okaidia .token.style .string,
+.code-theme-okaidia .token.variable {
+  color: #f8f8f2;
+}
+.code-theme-okaidia .token.atrule,
+.code-theme-okaidia .token.attr-value,
+.code-theme-okaidia .token.function,
+.code-theme-okaidia .token.class-name {
+  color: #e6db74;
+}
+.code-theme-okaidia .token.keyword {
+  color: #66d9ef;
+}
+.code-theme-okaidia .token.regex,
+.code-theme-okaidia .token.important {
+  color: #fd971f;
+}
+.code-theme-okaidia .token.important,
+.code-theme-okaidia .token.bold {
+  font-weight: bold;
+}
+.code-theme-okaidia .token.italic {
+  font-style: italic;
+}
+.code-theme-okaidia .token.entity {
+  cursor: help;
+}
+.code-theme-Ateliersulphurpool pre {
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+.code-theme-Ateliersulphurpool pre:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.code-theme-Ateliersulphurpool pre:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.code-theme-Ateliersulphurpool .plain,
+.code-theme-Ateliersulphurpool .token {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  font-weight: normal;
+}
+.code-theme-Ateliersulphurpool pre {
+  background: #f5f7ff;
+  color: #5e6687;
+  direction: ltr;
+  font-family: Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', 'Courier New', Courier, monospace;
+  font-size: 14px;
+  hyphens: none;
+  line-height: 1.375;
+  margin: 0;
+  tab-size: 4;
+  text-align: left;
+  word-break: normal;
+  word-spacing: normal;
+}
+.code-theme-Ateliersulphurpool .token.comment,
+.code-theme-Ateliersulphurpool .token.prolog,
+.code-theme-Ateliersulphurpool .token.doctype,
+.code-theme-Ateliersulphurpool .token.cdata {
+  color: #898ea4;
+}
+.code-theme-Ateliersulphurpool .token.punctuation {
+  color: #5e6687;
+}
+.code-theme-Ateliersulphurpool .token.namespace {
+  opacity: 0.7;
+}
+.code-theme-Ateliersulphurpool .token.operator,
+.code-theme-Ateliersulphurpool .token.boolean,
+.code-theme-Ateliersulphurpool .token.number {
+  color: #c76b29;
+}
+.code-theme-Ateliersulphurpool .token.property {
+  color: #c08b30;
+}
+.code-theme-Ateliersulphurpool .token.tag {
+  color: #3d8fd1;
+}
+.code-theme-Ateliersulphurpool .token.string {
+  color: #22a2c9;
+}
+.code-theme-Ateliersulphurpool .token.selector {
+  color: #6679cc;
+}
+.code-theme-Ateliersulphurpool .token.attr-name {
+  color: #c76b29;
+}
+.code-theme-Ateliersulphurpool .token.entity,
+.code-theme-Ateliersulphurpool .token.url,
+.code-theme-Ateliersulphurpool .token.string,
+.code-theme-Ateliersulphurpool .token.string {
+  color: #22a2c9;
+}
+.code-theme-Ateliersulphurpool .token.attr-value,
+.code-theme-Ateliersulphurpool .token.keyword,
+.code-theme-Ateliersulphurpool .token.control,
+.code-theme-Ateliersulphurpool .token.directive,
+.code-theme-Ateliersulphurpool .token.unit {
+  color: #ac9739;
+}
+.code-theme-Ateliersulphurpool .token.statement,
+.code-theme-Ateliersulphurpool .token.regex,
+.code-theme-Ateliersulphurpool .token.atrule {
+  color: #22a2c9;
+}
+.code-theme-Ateliersulphurpool .token.placeholder,
+.code-theme-Ateliersulphurpool .token.variable {
+  color: #3d8fd1;
+}
+.code-theme-Ateliersulphurpool .token.deleted {
+  text-decoration: line-through;
+}
+.code-theme-Ateliersulphurpool .token.inserted {
+  border-bottom: 1px dotted #202746;
+  text-decoration: none;
+}
+.code-theme-Ateliersulphurpool .token.italic {
+  font-style: italic;
+}
+.code-theme-Ateliersulphurpool .token.important,
+.code-theme-Ateliersulphurpool .token.bold {
+  font-weight: bold;
+}
+.code-theme-Ateliersulphurpool .token.important {
+  color: #c94922;
+}
+.code-theme-Ateliersulphurpool .token.entity {
+  cursor: help;
+}
+.code-theme-vs pre {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+.code-theme-vs pre:first-child {
+  border-top: 1px solid #ddd;
+}
+.code-theme-vs pre:last-child {
+  border-bottom: 1px solid #ddd;
+}
+.code-theme-vs .plain,
+.code-theme-vs .token {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  font-weight: normal;
+}
+.code-theme-vs pre {
+  background-color: #fff;
+  color: #393a34;
+  direction: ltr;
+  font-family: 'Consolas', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
+  font-size: 0.95em;
+  hyphens: none;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 2px 0;
+  tab-size: 4;
+  text-align: left;
+  word-break: normal;
+  word-spacing: normal;
+}
+.code-theme-vs .token.comment,
+.code-theme-vs .token.prolog,
+.code-theme-vs .token.doctype,
+.code-theme-vs .token.cdata {
+  color: #008000;
+  font-style: italic;
+}
+.code-theme-vs .token.namespace {
+  opacity: 0.7;
+}
+.code-theme-vs .token.string {
+  color: #a31515;
+}
+.code-theme-vs .token.punctuation,
+.code-theme-vs .token.operator {
+  color: #393a34;
+}
+.code-theme-vs .token.url,
+.code-theme-vs .token.symbol,
+.code-theme-vs .token.number,
+.code-theme-vs .token.boolean,
+.code-theme-vs .token.variable,
+.code-theme-vs .token.constant,
+.code-theme-vs .token.inserted {
+  color: #36acaa;
+}
+.code-theme-vs .token.function {
+  color: #00009f;
+}
+.code-theme-vs .token.deleted,
+.code-theme-vs .token.tag {
+  color: #9a050f;
+}
+.code-theme-vs .token.selector,
+.code-theme-vs .token.keyword {
+  color: #00009f;
+}
+.code-theme-vs .token.important,
+.code-theme-vs .token.bold {
+  font-weight: bold;
+}
+.code-theme-vs .token.italic {
+  font-style: italic;
+}
+.code-theme-vs .token.class-name,
+.code-theme-vs .token.property {
+  color: #2b91af;
+}
+.code-theme-vs .token.tag,
+.code-theme-vs .token.selector {
+  color: #800000;
+}
+.code-theme-vs .token.attr-name,
+.code-theme-vs .token.property,
+.code-theme-vs .token.regex,
+.code-theme-vs .token.entity {
+  color: #f00;
+}
+</style><script charset="utf-8" src="./lazy.1807212e5b73373dc04f.js"></script><script charset="utf-8" src="./6.1807212e5b73373dc04f.js"></script><script charset="utf-8" src="./5.1807212e5b73373dc04f.js"></script><script charset="utf-8" src="./4.1807212e5b73373dc04f.js"></script><style type="text/css">/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+}
+main {
+  display: block;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+a {
+  background-color: transparent;
+}
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted;
+}
+b,
+strong {
+  font-weight: bolder;
+}
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sub {
+  bottom: -0.25em;
+}
+sup {
+  top: -0.5em;
+}
+img {
+  border-style: none;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+button,
+input {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
+}
+progress {
+  vertical-align: baseline;
+}
+textarea {
+  overflow: auto;
+}
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+details {
+  display: block;
+}
+summary {
+  display: list-item;
+}
+template {
+  display: none;
+}
+[hidden] {
+  display: none;
+}
+</style><style data-emotion="css-global"></style><style data-emotion="css-global"></style><style data-emotion="css-global"></style><style data-emotion="css-global"></style><style data-emotion="css-global"></style><style data-emotion="css"></style><style type="text/css">.ant-back-top {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  -webkit-font-feature-settings: 'tnum';
+  font-feature-settings: 'tnum';
+  position: fixed;
+  right: 100px;
+  bottom: 50px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.ant-back-top-content {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.45);
+  border-radius: 20px;
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.ant-back-top-content:hover {
+  background-color: rgba(0, 0, 0, 0.65);
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.ant-back-top-icon {
+  width: 14px;
+  height: 16px;
+  margin: 12px auto;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAoCAYAAACWwljjAAAABGdBTUEAALGPC/xhBQAAAbtJREFUWAntmMtKw0AUhhMvS5cuxILgQlRUpIggIoKIIoigG1eC+AA+jo+i6FIXBfeuXIgoeKVeitVWJX5HWhhDksnUpp3FDPyZk3Nm5nycmZKkXhAEOXSA3lG7muTeRzmfy6HneUvIhnYkQK+Q9NhAA0Opg0vBEhjBKHiyb8iGMyQMOYuK41BcBSypAL+MYXSKjtFAW7EAGEO3qN4uMQbbAkXiSfRQJ1H6a+yhlkKRcAoVFYiweYNjtCVQJJpBz2GCiPt7fBOZQpFgDpUikse5HgnkM4Fi4QX0Fpc5wf9EbLqpUCy4jMoJSXWhFwbMNgWKhVbRhy5jirhs9fy/oFhgHVVTJEs7RLZ8sSEoJm6iz7SZDMbJ+/OKERQTttCXQRLToRUmrKWCYuA2+jbN0MB4OQobYShfdTCgn/sL1K36M7TLrN3n+758aPy2rrpR6+/od5E8tf/A1uLS9aId5T7J3CNYihkQ4D9PiMdMC7mp4rjB9kjFjZp8BlnVHJBuO1yFXIV0FdDF3RlyFdJVQBdv5AxVdIsq8apiZ2PyYO1EVykesGfZEESsCkweyR8MUW+V8uJ1gkYipmpdP1pm2aJVPEGzAAAAAElFTkSuQmCC) 1% no-repeat;
+}
+@media screen and (max-width: 768px) {
+  .ant-back-top {
+    right: 60px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .ant-back-top {
+    right: 20px;
+  }
+}
+</style><style type="text/css">.note-view-wrapper {
+  background: transparent !important;
+}
+.note-view {
+  /* width: 100% !important;
+    overflow: hidden !important;
+    padding-top: 20px !important; */
+}
+
+.toolbar {
+  display: none !important;
+}
+
+.fullScreen .note-view-wrapper {
+  width: 75% !important;
+  margin-left: auto !important;
+}
+
+.fullScreen .note-view-wrapper .bulb-editor {
+  margin-top: 0 !important;
+}
+
+.fullScreen .note-view {
+  padding: 70px !important;
+}
+
+.title-widget {
+  display: none;
+}
+
+.fullScreen div[data-block-type='code'] .bulb-scroll {
+  width: calc(50vw - 39px) !important;
+}
+
+.fullScreen .title-widget {
+  display: block !important;
+  margin: 20px 0px !important;
+}
+
+*:not(input)::selection {
+  background-color: #296aff36 !important;
+}
+
+.fullScreen .note-view-wrapper {
+  width: 80% !important;
+  margin: auto !important;
+}
+
+#loading {
+  display: none !important;
+}
+</style></head>
+  <body>
+  <script type="text/javascript" src="./vendors.1807212e5b73373dc04f.js"></script><script type="text/javascript" src="./main.bundle.1807212e5b73373dc04f.js"></script><div id="wrapper"><div id="loading" style="display: none;"><div class="css-1o5xcbl"></div><div class="css-190fj8z"><div class="css-tm3fzc"><div class="css-822c8v"></div></div><div class="css-1ug1132"><div class="css-10mpizh"></div></div><div class="css-a5bt3e"><div class="css-1kl9vky"></div></div><div class="css-1t8xqrt"><div class="css-128e773"></div></div><div class="css-1yonabt"><div class="css-ak371w"></div></div><div class="css-jge2ik"><div class="css-17y9q6q"></div></div></div></div><div class="page-mode-1 css-1cvuvb8"><div class="note-view-wrapper bulb-scroll-container css-oo5nr1" style="overflow: hidden;"><div class="note-view css-1s56bp4" style="font-family: -apple-system, BlinkMacSystemFont, &quot;PingFang SC&quot;, Helvetica, Tahoma, Arial, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, 微软雅黑, SimSun, 宋体, Heiti, 黑体, sans-serif; font-size: 14px; color: rgb(57, 57, 57); font-weight: normal; font-style: normal; text-decoration: none; text-align: left; line-height: 1.75; text-indent: 0px;"><div class="title-widget css-la9emy"><input type="text" placeholder="无标题笔记" spellcheck="false" autocomplete="off" autocapitalize="none" autocorrect="off" class="css-1r2ld0m" value="白马2号逻辑详情-最新"><hr class="css-kxa1qh"></div><div class="bulb-editor bulb-editor-inner" style="white-space: pre-wrap; overflow-wrap: break-word; user-select: none; cursor: text;"><div data-bulb-node-id="4782-1597735044870" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="aIQ9-1644208224425"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">白马2号之前有几篇文章被删了，这次我正好重新理一理，重新发一篇。</span></span></div><div data-bulb-node-id="3538-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="Vd3K-1644208224425"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="3495-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="pIQt-1644208224426"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">白马2号目前有两种运行模式，第一种是主观+量化，就是用策略选出一个股票池，这个池子里会有几十只优秀的股票，然后大家可以从主观从股票池里捞出3-5只进行买卖，这是目前我们圈子里正在使用的模式，4月-8月实战下来效果非常不错。第二种是纯量化模式，我会公开完整的策略逻辑，这个可以做成量化策略无脑运行。</span></span></div><div data-bulb-node-id="6010-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="PGBx-1644208224426"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="8995-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="sTkZ-1644208224426"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">接着介绍一下这两种模式吧，第一种模式是重点，</span><span class="color background-color bold" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); font-weight: bold; padding-top: 1px; padding-bottom: 1px;">是大家可以直接实盘参考的，很重要</span><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">。第二种模式有做量化策略能力的可以看看，不想自己做量化策略的可以直接跳过。</span></span></div><div data-bulb-node-id="1028-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="vKEg-1644208224426"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="7559-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="g2Xa-1644208224427"><span class="bold color background-color" style="font-weight: bold; color: rgb(230, 0, 0); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">第一种模式</span></span></div><div data-bulb-node-id="2493-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="6t15-1644208224427"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="5598-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="5NUA-1644208224427"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">第一种是圈子内正在使用的主观+量化模式，用这种模式首先就要用量化的方式选出一个股票池，先说一下选股指标一下选股指标：</span></span></div><div data-bulb-node-id="3594-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="7o1p-1644208224427"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="7082-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="0TC0-1644208224427"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">1. 成长性：最近一个季度营收同比增长、环比增长均大于0</span></span></div><div data-bulb-node-id="8037-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="xZxZ-1644208224427"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">2. 成长性：最近一个季度净利润同比增长、环比增长均大于0</span></span></div><div data-bulb-node-id="1511-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="1mWG-1644208224428"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">3. 单季度净利润&gt;500万</span></span></div><div data-bulb-node-id="9011-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="omFY-1644208224428"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">4. 赚钱能力超过国债：最新ROE &gt; 4%</span></span></div><div data-bulb-node-id="9276-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="Qfbk-1644208224428"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">5. 排序：剩余股票ROA由高到低排序，且只取ROA&gt;4%的</span></span></div><div data-bulb-node-id="4320-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="NbJl-1644208224428"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="4183-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="KGK2-1644208224428"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">这个股票池一个季度更新一次，每次到财报季的时候就会陆续更新新一季的股票池。比如7月份二季报开始陆续披露了，那我就会开始更新二季度符合白马2号指标的股票池</span><span class="background-color color" style="background-color: rgb(255, 255, 255); color: rgb(57, 57, 57); padding-top: 1px; padding-bottom: 1px;">。但是二季报会到9月1日才全部披露完成，所以我自己为了稳定过渡，会到9月1日才去调仓。</span></span></div><div data-bulb-node-id="1255-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="m0dW-1644208224428"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="3593-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="YW3z-1644208224428"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">圈子里5月6日开始尝试这种模式，5月6日选出来的是第一季度的股票池如下，这个池子是5月6日就在圈子里公开了的，但8月10日被小红圈删除了。哦，对了，我们之前统计过5月6日到8月3日白马2号股票池个股的涨跌幅，这期间，39只个股的平均涨幅是+51.46%，如果无脑买进前5只的涨幅是+74.34%，涨幅最大的个股是盈科医疗+225%，其次是硕世生物211%。</span></span></div><div data-bulb-node-id="6639-1597735046187" data-block-type="image" data-float="false" class="css-1u2bxy"><div class="css-1hg53gd"><div class="css-cf8cyr"><div class="css-jk18ff"><img crossorigin="" src="./截图.png" alt="https://note.youdao.com/yws/public/resource/6fcebfa52262c34b6e1790e0570a1dec/xmlnote/WEBRESOURCE2991d03c042049882c552e221c43841e/127" width="620" draggable="false" class="css-125smcw"></div></div></div></div><div data-bulb-node-id="3641-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="RFXv-1644208224429"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="4280-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="cO1E-1644208224429"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">我们7月份开始就已经在更新二季度股票池了，截至到8月12日，白马2好二季度股票池如下：</span></span></div><div data-bulb-node-id="8820-1597735046187" data-block-type="image" data-float="false" class="css-1u2bxy"><div class="css-1hg53gd"><div class="css-cf8cyr"><div class="css-jk18ff"><img crossorigin="" src="./截图(1).png" alt="https://note.youdao.com/yws/public/resource/6fcebfa52262c34b6e1790e0570a1dec/xmlnote/WEBRESOURCE94ecd5c1c19dc6553b1fcdf7487c71f3/124" width="620" draggable="false" class="css-125smcw"></div></div></div></div><div data-bulb-node-id="8961-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="TfrV-1644208224429"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="3726-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="KGpx-1644208224429"><span class="bold" style="font-weight: bold; padding-top: 1px; padding-bottom: 1px;">还有一个小提示：</span><span class="" style="padding-top: 1px; padding-bottom: 1px;">有个圈友叫666，他分享了一种可以在同花顺直接查看最新白马2号股票的方式，把这段话直接复制到同花问财：2020年中报净利润同比增长＞0，2020年中报营业收入同比增长＞0，非st，2020年中报ROE＞3，2020年二季度净利润减去2020年一季度净利润＞2020一季度净利润，2020年二季度营业收入减去2020年一季度营业收入＞2020年一季度营业收入，2020年二季度ROA排序</span></span></div><div data-bulb-node-id="8794-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="gXwj-1644208224429"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="8295-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="gkLG-1644208224429"><span class="bold color background-color" style="font-weight: bold; color: rgb(230, 0, 0); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">第二种模式</span></span></div><div data-bulb-node-id="3883-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="rNxO-1644208224429"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="4041-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="vO4p-1644208224429"><span class="color background-color" style="color: rgb(44, 45, 49); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">这个模式我会说详细的逻辑，有能力的可以根据这个逻辑做成策略，历年来的回测表现：</span></span></div><div data-bulb-node-id="2279-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="8RlW-1644208224430"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="3555-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="oedl-1644208224430"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">2017年1月2日-2020年4月13日:&nbsp;总收益298.51%，最大回撤发生在2019年4月3日到2019年5月6日，为27.34%。</span><span class="background-color color" style="background-color: rgb(255, 255, 255); color: rgb(136, 136, 136); padding-top: 1px; padding-bottom: 1px;">（蓝色曲线是策略收益，红色为沪深300指数）</span></span></div><div data-bulb-node-id="1169-1597735046187" data-block-type="image" data-float="false" class="css-1u2bxy"><div class="css-1hg53gd"><div class="css-cf8cyr"><div class="css-jk18ff"><img crossorigin="" src="./截图(2).png" alt="https://note.youdao.com/yws/public/resource/6fcebfa52262c34b6e1790e0570a1dec/xmlnote/WEBRESOURCE7ba4ec31582e03cf122f453bf5980937/73" width="620" draggable="false" class="css-125smcw"></div></div></div></div><div data-bulb-node-id="4755-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="3IqO-1644208224430"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="1842-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="btWf-1644208224430"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">2020年1月2日-2020年4月13日的回测表现：总收益26.46%，最大回撤14.05%。</span></span></div><div data-bulb-node-id="2648-1597735046187" data-block-type="image" data-float="false" class="css-1u2bxy"><div class="css-1hg53gd"><div class="css-cf8cyr"><div class="css-jk18ff"><img crossorigin="" src="./截图(3).png" alt="https://note.youdao.com/yws/public/resource/6fcebfa52262c34b6e1790e0570a1dec/xmlnote/WEBRESOURCE826840e5837744959aefc208ed741105/75" width="620" draggable="false" class="css-125smcw"></div></div></div></div><div data-bulb-node-id="3029-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="YnJk-1644208224430"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">这是之前的数据，其实4月13日到8月13日的收益还要好，不过今天太晚了，我懒得跑数据了哈哈。</span></span></div><div data-bulb-node-id="8784-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="1Min-1644208224430"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="6941-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="xJ6b-1644208224430"><span class="bold color background-color" style="font-weight: bold; color: rgb(230, 0, 0); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">对了，我先把话说明白：这个策略我是第一次实盘。下文我会把所有的逻辑都说明白，我不会推荐，也不会鼓励大家跟盘。最后参不参考你们自己衡量，赚了是你们自己执行的好，亏了也别怨我，这点大家应该都明白，没有稳赚的策略，总会有风险。</span></span></div><div data-bulb-node-id="2626-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="08KQ-1644208224431"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="5882-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="jw7L-1644208224431"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">下面我用问答的方式给大家说说这个策略的详细逻辑。</span></span></div><div data-bulb-node-id="7095-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="0lDy-1644208224431"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="4178-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="KRFD-1644208224431"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">1、策略的逻辑是什么？</span></span></div><div data-bulb-node-id="6714-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="0o49-1644208224431"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="5688-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="l9PP-1644208224431"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">其实这个策略之前在公众号分享过，但我这次做了一些优化和改造，让它的选股结构更加稳定。</span></span></div><div data-bulb-node-id="8527-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="aspI-1644208224431"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="9034-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="e29e-1644208224432"><span class="bold color background-color" style="font-weight: bold; color: rgb(44, 45, 49); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">选股逻辑：</span><span class="color background-color" style="color: rgb(44, 45, 49); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">这个策略的选股逻辑由两部分组成，第一部是</span><span class="color background-color bold" style="color: rgb(44, 45, 49); background-color: rgb(255, 255, 255); font-weight: bold; padding-top: 1px; padding-bottom: 1px;">成长型</span><span class="color background-color" style="color: rgb(44, 45, 49); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">，这部分的任务是选出成长和反转可能大的股票。第二个是</span><span class="color background-color bold" style="color: rgb(44, 45, 49); background-color: rgb(255, 255, 255); font-weight: bold; padding-top: 1px; padding-bottom: 1px;">稳定型</span><span class="color background-color" style="color: rgb(44, 45, 49); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">，这部分目的是选出财务更稳定的股票。</span></span></div><div data-bulb-node-id="3359-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="kNlE-1644208224432"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="9052-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="XCV9-1644208224432"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">先说成长型的选股条件：</span></span></div><div data-bulb-node-id="9930-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="HtOe-1644208224432"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">1. 成长性：最近一个季度营收同比增长、环比增长均大于0</span></span></div><div data-bulb-node-id="5335-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="mZ9j-1644208224432"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">2. 成长性：最近一个季度净利润同比增长、环比增长均大于0</span></span></div><div data-bulb-node-id="8130-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="KNwJ-1644208224432"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">3. 排除妖股：最新估值在88倍以内</span></span></div><div data-bulb-node-id="7864-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="kuxv-1644208224432"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">4. 赚钱能力超过国债：最新ROE &gt; 4%</span></span></div><div data-bulb-node-id="9650-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="qghI-1644208224432"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">5. 排序：剩余股票ROA由高到低排序，取前3只股票</span></span></div><div data-bulb-node-id="8534-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="elk3-1644208224433"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="5037-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="npyz-1644208224433"><span class="color background-color" style="color: rgb(44, 45, 49); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">再说稳定型的选股条件：</span></span></div><div data-bulb-node-id="6138-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="JKQB-1644208224433"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">1. 稳定性：最近两个季度，每个季度营收同比增长、环比增长均大于0</span></span></div><div data-bulb-node-id="9836-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="zNVI-1644208224433"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">2. 稳定性：最近两个季度，每个季度净利润同比增长、环比增长均大于0</span></span></div><div data-bulb-node-id="8491-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="cpkC-1644208224433"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">3. 赚钱能力超过国债：最新ROE &gt; 4%</span></span></div><div data-bulb-node-id="6546-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="GH4r-1644208224433"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">4. 排序：剩余股票ROA由高到低排序，取前2只股票</span></span></div><div data-bulb-node-id="7084-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="mCnX-1644208224433"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="2070-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="Zg2F-1644208224433"><span class="color background-color" style="color: rgb(44, 45, 49); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">总共选取5只，等权重配置。成长型选取的都是最新一个季度增长，偏向于股票的成长和反转性。稳定型需要满足连续两个季度增长，更偏向于稳定性。为了稳定性和成长性兼得，所以把这两个策略融合到了一起。</span></span></div><div data-bulb-node-id="8352-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="zgoq-1644208224433"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="3958-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="dKdj-1644208224433"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">调仓逻辑：</span><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">策略用轮动的方式进行买卖，每日调仓，满足条件的股票持有，不满足的卖掉。</span></span></div><div data-bulb-node-id="6091-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="dIuX-1644208224434"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="1247-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="eP2p-1644208224434"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">择时逻辑:&nbsp;</span><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">当沪深300指数的70日均线大于前1日收盘价，且90日均线大于70日均线时，清仓，并且不再开仓。直到沪深300前1日收盘价大于70日均线，或者70日均线大于90日均线，才重新开仓。（因为白马股策略的beta比较高，和大盘的走势相当，所以加上大盘择时会更好）</span></span></div><div data-bulb-node-id="2900-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="oaDK-1644208224435"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="2830-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="7rHT-1644208224435"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="4998-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="uzw6-1644208224435"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">2、策略为什么能赚钱，赚钱的逻辑是什么？</span></span></div><div data-bulb-node-id="3432-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="qIeZ-1644208224435"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="7476-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="fve3-1644208224435"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">这个策略的核心通过筛选出财务稳定，成长性好，且赚钱能力强的股票。说白了，就是选优秀的白马股。策略能赚钱也是赚风格、稳定和成长的钱。</span></span></div><div data-bulb-node-id="5919-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="0fZ9-1644208224435"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="1766-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="d6PD-1644208224435"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">3、策略持仓多少个？会有风控吗？</span></span></div><div data-bulb-node-id="5230-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="vZHN-1644208224435"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="8657-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="Dlhb-1644208224435"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">策略持仓5个，等仓位配置，有择时，但没有设置风控，也没有止损，当然，遇到康美和康得新那样的股票，只能手动排除。</span></span></div><div data-bulb-node-id="3222-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="bss7-1644208224436"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="7088-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="040m-1644208224436"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="0051-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="VvtP-1644208224436"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">4、交易频率怎么样？</span></span></div><div data-bulb-node-id="6126-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="f7vZ-1644208224436"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="6381-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="nDWF-1644208224436"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">平均持股天数是35天，持仓天数中位数是14天，算是低频策略，有一点需要注意，每年到财务季，换仓会比较频繁，因为每家公司披露财务的时间不同，一旦披露了，就用他最新的财务报告。</span></span></div><div data-bulb-node-id="8169-1597735046187" data-block-type="image" data-float="false" class="css-1u2bxy"><div class="css-1hg53gd"><div class="css-cf8cyr"><div class="css-1ep37al"><img crossorigin="" src="./截图(4).png" alt="https://note.youdao.com/yws/public/resource/6fcebfa52262c34b6e1790e0570a1dec/xmlnote/WEBRESOURCE26889ba77c6bfeca5cd12ce6b415f3d8/88" width="389" draggable="false" class="css-125smcw"></div></div></div></div><div data-bulb-node-id="6017-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="sToX-1644208224436"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="7060-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="tHfS-1644208224436"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="9978-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="Jboy-1644208224436"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">5、策略历史上都买过什么股票？</span></span></div><div data-bulb-node-id="8574-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="LzHT-1644208224437"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="5663-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="k24J-1644208224437"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">这个策略3年里买过60来只股票。我把2017年以来买过的票都截个图，你们心里也有些数：</span></span></div><div data-bulb-node-id="5899-1597735046187" data-block-type="image" data-float="false" class="css-1u2bxy"><div class="css-1hg53gd"><div class="css-cf8cyr"><div class="css-g2wihg"><img crossorigin="" src="./截图(5).png" alt="https://note.youdao.com/yws/public/resource/6fcebfa52262c34b6e1790e0570a1dec/xmlnote/WEBRESOURCE5b5d0765f0580336bac7a96c657313e1/90" width="369" draggable="false" class="css-125smcw"></div></div></div></div><div data-bulb-node-id="2336-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="H91V-1644208224437"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div><div data-bulb-node-id="5214-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="itxQ-1644208224437"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">6、是否可能存在幸存者偏差？</span></span></div><div data-bulb-node-id="2932-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="nvuy-1644208224437"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="5667-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="3lDm-1644208224437"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">3年里发生了129次交易，而且我以多种不一样的股票池作为策略的股票池进行策略，效果都不错，基本能排除幸存者偏差的可能性。</span></span></div><div data-bulb-node-id="9721-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="qi0Z-1644208224437"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="6072-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="Qd7N-1644208224437"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">7、策略回测的历年收益分别是多少？</span></span></div><div data-bulb-node-id="4595-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="Y8dG-1644208224437"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="9495-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="OZ88-1644208224437"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">2018年的收益是-10%，其他年份均为正。年度收益图如下:</span></span></div><div data-bulb-node-id="7584-1597735046187" data-block-type="image" data-float="false" class="css-1u2bxy"><div class="css-1hg53gd"><div class="css-cf8cyr"><div class="css-1oridwr"><img crossorigin="" src="./截图(6).png" alt="https://note.youdao.com/yws/public/resource/6fcebfa52262c34b6e1790e0570a1dec/xmlnote/WEBRESOURCEffa5bf5b005ead9cecc31a883c237d39/92" width="383" draggable="false" class="css-125smcw"></div></div></div></div><div data-bulb-node-id="3770-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="KZD8-1644208224438"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="2617-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="DLi8-1644208224438"><span class="bold color background-color" style="font-weight: bold; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">8、策略的优劣有哪些，给个评价？</span></span></div><div data-bulb-node-id="5970-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="wo3Y-1644208224438"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="5116-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="nAl5-1644208224438"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">策略的优点很明显，选择的股票都是实打实的白马股，最近几年的收益非常稳定，持有的时候心里也舒服。</span></span></div><div data-bulb-node-id="5315-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="qDwL-1644208224438"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="2838-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="C7qq-1644208224438"><span class="color background-color" style="color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">策略的缺点也很明显，股票风格单一，全是白马股，一旦白马股不香，那策略就有可能遭遇滑铁卢，而且总体的收益也没有很爆炸，还有可能会遭遇比较长时间的回撤，持有的时候必须得有耐心。</span></span></div><div data-bulb-node-id="8246-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="H1DH-1644208224438"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">&nbsp;</span></span></div><div data-bulb-node-id="5930-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="AJrM-1644208224438"><span class="color background-color" style="color: rgb(57, 57, 57); background-color: rgb(255, 255, 255); padding-top: 1px; padding-bottom: 1px;">这种模式目前已经公布了，但大家可以从第二种模式的股票池里取前5只，结果基本就和上面的回测图效果一致。</span></span></div><div data-bulb-node-id="6257-1597735046187" data-block-type="paragraph" class="css-1xgc5oj"><span data-bulb-node-id="a5PO-1644208224438"><span class="" style="padding-top: 1px; padding-bottom: 1px;"><span>&nbsp;</span></span></span></div></div></div></div></div></div>
+</body></html>
